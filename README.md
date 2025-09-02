@@ -1,9 +1,9 @@
 
 # QPSK Coarse Frequency Compensation in MATLAB
 
-This repository demonstrates how to **analyze, apply, and verify coarse frequency compensation** on QPSK-modulated signals. The workflow extracts **I and Q samples** from Verilog simulations (after SRRC filtering), adds a known **Carrier Frequency Offset (CFO)** in MATLAB, and then applies MATLAB’s built-in [`comm.CoarseFrequencyCompensator`](https://www.mathworks.com/help/comm/ref/comm.coarsefrequencycompensator-system-object.html) using both **FFT-based** and **Correlation-based** algorithms.
+This repository demonstrates how to **analyze, apply, and verify coarse frequency compensation** on QPSK-modulated signals. The workflow extracts **I and Q samples** from Verilog simulations (, adds a known **Carrier Frequency Offset (CFO)** in MATLAB, and then applies MATLAB’s built-in [`comm.CoarseFrequencyCompensator`](https://www.mathworks.com/help/comm/ref/comm.coarsefrequencycompensator-system-object.html) using both **FFT-based** and **Correlation-based** algorithms.
 
-The project bridges **theoretical derivation** with **practical MATLAB implementation**, making it easier for readers to connect concepts to working code.
+The project bridges **theoretical derivation** with **practical MATLAB implementation**,
 
 ---
 
