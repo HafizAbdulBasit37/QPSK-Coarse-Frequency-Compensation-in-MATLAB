@@ -1,0 +1,23 @@
+% FFT-based compensator
+freqComp = comm.CoarseFrequencyCompensator( ...
+    'Modulation','qpsk', ...
+    'SampleRate',Fs, ...
+    'FrequencyResolution',10);
+
+[compensated_signal, estFreqOffset] = freqComp(cfo_signal);
+
+fprintf('Applied CFO: %.2f Hz\n', f_cfo);
+fprintf('Estimated CFO: %.2f Hz\n', estFreqOffset);
+fprintf('Estimation error: %.2f Hz\n', abs(estFreqOffset - f_cfo));
+
+% Spectrum comparison
+N = length(signal);
+f = (-Fs/2:Fs/N:Fs/2-Fs/N)';
+spectrum_orig = fftshift(fft(signal));
+spectrum_cfo = fftshift(fft(cfo_signal));
+spectrum_comp = fftshift(fft(compensated_signal));
+
+figure;
+subplot(3,1,1); plot(f/1e3, 20*log10(abs(spectrum_orig))); title('Original'); xlim([-10 10]); grid on;
+subplot(3,1,2); plot(f/1e3, 20*log10(abs(spectrum_cfo))); title('With CFO'); xlim([-10 10]); grid on;
+subplot(3,1,3); plot(f/1e3, 20*log10(abs(spectrum_comp))); title('After FFT Compensation'); xlim([-10 10]); grid on;
