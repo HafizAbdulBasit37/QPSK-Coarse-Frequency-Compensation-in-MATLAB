@@ -1,0 +1,30 @@
+% Load I and Q data
+I = load('I1.txt');
+Q = load('Q2.txt');
+signal = I + 1j*Q;
+
+Fs = 61.44e6;              % Sampling frequency
+f_cfo = 1e3;               % Induced CFO (1 kHz)
+n = (0:length(signal)-1).';
+
+% Apply CFO
+cfo_signal = signal .* exp(1j*2*pi*f_cfo*n/Fs);
+
+% Correlation-based compensator
+freqComp = comm.CoarseFrequencyCompensator( ...
+    'Modulation','qpsk', ...
+    'SampleRate',Fs, ...
+    'Algorithm','Correlation-based', ...
+    'MaximumFrequencyOffset',5000);
+
+[compensated_signal, estFreqOffset] = freqComp(cfo_signal);
+
+fprintf('Applied CFO: %.2f Hz\n', f_cfo);
+fprintf('Estimated CFO: %.2f Hz\n', estFreqOffset);
+fprintf('Estimation error: %.2f Hz\n', abs(estFreqOffset - f_cfo));
+
+% Plot constellations
+figure;
+subplot(1,3,1); plot(real(signal(1:5000)), imag(signal(1:5000)),'.'); title('Original'); axis equal;
+subplot(1,3,2); plot(real(cfo_signal(1:5000)), imag(cfo_signal(1:5000)),'.'); title('With CFO'); axis equal;
+subplot(1,3,3); plot(real(compensated_signal(1:5000)), imag(compensated_signal(1:5000)),'.'); title('After Compensation'); axis equal;
