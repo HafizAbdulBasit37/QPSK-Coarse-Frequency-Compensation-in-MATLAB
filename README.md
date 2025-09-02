@@ -26,13 +26,3 @@ In this project:
 
 ---
 
-## Theoretical Background
-
-### Mathematical Derivation of Correlation-Based CFO Estimation
-
-Reference [1] describes the **correlation-based maximum likelihood (ML)** estimator for PSK and PAM signals.
-
-The received signal is:
-
-```math
-r_k = e^{j(2 \pi \Delta f k T_s + \theta)}, \quad 1 \leq k \leq N
